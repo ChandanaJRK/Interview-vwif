@@ -52,7 +52,7 @@ class MapRenderer {
 
 public:
 
-    void processGeoData(const GeoData& data) {
+    void updateGeoData(const GeoData& data) {
 
         std::cout << "Updated GeoData Location: \n" << data.location << " \nLatitude in degree: " << data.latitude <<  "\nLongitude in degree: " << data.longitude <<"\n"<< std::endl;
     }
@@ -67,8 +67,8 @@ int main() {
     MapRenderer renderer1, renderer2;
 
     // Subscribe to the publisher for geo data signal in the access library
-    boost::signals2::connection connection1 = accessLibrary.registerSubscriber(boost::bind(&MapRenderer::processGeoData, &renderer1, _1));
-    boost::signals2::connection connection2 = accessLibrary.registerSubscriber(boost::bind(&MapRenderer::processGeoData, &renderer2, _1));
+    boost::signals2::connection connection1 = accessLibrary.registerSubscriber(boost::bind(&MapRenderer::updateGeoData, &renderer1, _1));
+    boost::signals2::connection connection2 = accessLibrary.registerSubscriber(boost::bind(&MapRenderer::updateGeoData, &renderer2, _1));
 
     // Notify subscribers about new geo data    
     accessLibrary.notifySubscribers(geoData1);
